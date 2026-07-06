@@ -1,0 +1,235 @@
+/* Общие сбросы и переменные */
+:root {
+    --bg-color: #fcfcfc;
+    --text-color: #1a1a1a;
+    --text-muted: #767676;
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 60px;
+}
+
+/* Шапка и Навигация */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    position: sticky;
+    top: 0;
+    background-color: rgba(252, 252, 252, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-color);
+}
+
+/* Контейнер Галереи */
+.gallery-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.page-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 50px;
+    font-style: italic;
+}
+
+/* Сетка (Grid) с эффектом асимметрии */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1-fraction));
+    grid-auto-flow: dense; /* Заполняет пустые пространства автоматически */
+    gap: 40px; /* Большие отступы дают "воздух" картинам */
+}
+
+/* Элемент галереи */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    aspect-ratio: 1 / 1; /* По умолчанию квадратные */
+}
+
+/* Задаем разную пропорцию для некоторых карточек, чтобы сетка "играла" */
+.gallery-item.vertical {
+    grid-row: span 2;
+    aspect-ratio: 3 / 4;
+}
+
+.gallery-item.horizontal {
+    grid-column: span 2;
+    aspect-ratio: 16 / 9;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Картина не сжимается, а аккуратно кадрируется */
+    transition: var(--transition);
+}
+
+/* Эффект наведения (Overlay) */
+.item-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(252, 252, 252, 0.90); /* Светлый элегантный фон при наведении */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+    padding: 20px;
+    text-align: center;
+}
+
+.item-info h3 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+    transform: translateY(15px);
+    transition: var(--transition);
+}
+
+.item-info p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transform: translateY(15px);
+    transition: var(--transition);
+    transition-delay: 0.05s;
+}
+
+/* Логика Ховера */
+.gallery-item:hover img {
+    transform: scale(1.03);
+}
+
+.gallery-item:hover .item-overlay {
+    opacity: 1;
+}
+
+.gallery-item:hover .item-info h3,
+.gallery-item:hover .item-info p {
+    transform: translateY(0);
+}
+
+/* Адаптив под мобильные экраны */
+@media (max-width: 900px) {
+    .gallery-grid {
+        grid-template-columns: 1fr; /* В один ряд на телефонах */
+        gap: 20px;
+    }
+
+    .gallery-item, .gallery-item.vertical, .gallery-item.horizontal {
+        grid-column: span 1;
+        grid-row: span 1;
+        aspect-ratio: 1 / 1;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .gallery-container {
+        padding: 0 20px;
+    }
+}
+.about-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 40px;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Ровно пополам */
+    gap: 80px; /* Большой отступ между фото и текстом */
+    align-items: center;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    max-height: 700px;
+    object-fit: cover;
+    background-color: #f0f0f0;
+}
+
+.about-title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.about-lead {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 24px;
+    font-weight: 400;
+}
+
+.about-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 900px) {
+    .about-grid {
+        grid-template-columns: 1fr; /* Фото сверху, текст снизу */
+        gap: 40px;
+    }
+    .about-title {
+        font-size: 2.2rem;
+    }
+}
